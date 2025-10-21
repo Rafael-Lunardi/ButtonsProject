@@ -54,19 +54,14 @@ fun MainLayout() {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
-            var tapCount by remember { mutableIntStateOf(0) }
-            Text(
-                text = "Button Taps: $tapCount",
-                fontSize = 36.sp
-            )
             val context = LocalContext.current;
             Button(
                 onClick = {
-                    tapCount++
+
                 }
             ) {
                 Text(
-                    text = "Click gng",
+                    text = "Next",
                     color = Color.Magenta,
                     fontSize = 24.sp
 
@@ -74,9 +69,7 @@ fun MainLayout() {
             }
             Button(
                 onClick = {
-                    tapCount++
-                    val Toast = Toast.makeText(context, "Toast!", Toast.LENGTH_SHORT)
-                    Toast.show()
+
                 }
             ) {
                 Row {
@@ -85,13 +78,22 @@ fun MainLayout() {
                         contentDescription = "stuff",
                     )
                     Text(
-                        text = " Toast Check",
+                        text = " Hide/Unhide",
                         color = Color.Yellow,
                         fontSize = 24.sp
                     )
                 }
             }
+            Button(
+                onClick = {
 
+                }
+            ) {
+                Text(
+                    text = "Change Color",
+                    fontSize = 24.sp
+                )
+            }
         }
     }
 }
