@@ -62,10 +62,12 @@ fun MainLayout() {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
+            val imageList : Array<Int> = arrayOf(R.drawable.dog1, R.drawable.dog2, R.drawable.dog3)
+            var displayedImage by remember { mutableIntStateOf(0) }
             Image(
                 contentDescription = "dog1",
                 contentScale = ContentScale.Crop,
-                painter = painterResource(R.drawable.dog1),
+                painter = painterResource(imageList.get(displayedImage)),
                 modifier = Modifier
                     .size(300.dp)
             )
@@ -73,9 +75,13 @@ fun MainLayout() {
             val context = LocalContext.current;
             Button(
                 onClick = {
-
+                    if (displayedImage >= imageList.size - 1) {
+                        displayedImage = 0
+                    } else {
+                        displayedImage++
+                    }
                 }
-            ) {
+            ){
                 Text(
                     text = "Next",
                     color = Color.Magenta,
@@ -85,7 +91,6 @@ fun MainLayout() {
             }
             Button(
                 onClick = {
-                    val imageList : Array<Int> = arrayOf(R.drawable.dog1, R.drawable.dog2, R.drawable.dog3)
                 }
             ) {
                 Row {
