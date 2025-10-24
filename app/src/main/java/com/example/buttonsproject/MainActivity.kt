@@ -9,9 +9,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,6 +24,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -64,13 +67,29 @@ fun MainLayout() {
         ) {
             val imageList : Array<Int> = arrayOf(R.drawable.dog1, R.drawable.dog2, R.drawable.dog3)
             var displayedImage by remember { mutableIntStateOf(0) }
-            Image(
+            var showImage by remember {mutableStateOf(true)}
+            var imageOpac by remember { mutableFloatStateOf(1.0f) }
+            if (showImage) {
+                Image(
                 contentDescription = "dog1",
+                alpha = imageOpac,
                 contentScale = ContentScale.Crop,
                 painter = painterResource(imageList.get(displayedImage)),
                 modifier = Modifier
                     .size(300.dp)
-            )
+                    .clickable(
+                        onClick = {
+                            if (imageOpac > 0) {
+                                imageOpac -= 0.2f
+                            } else imageOpac = 1.0f
+                        }
+                    )
+                )
+            } else {
+                Spacer(
+                    modifier = Modifier.size(300.dp)
+                )
+            }
 
             val context = LocalContext.current;
             Button(
@@ -91,6 +110,9 @@ fun MainLayout() {
             }
             Button(
                 onClick = {
+                    if (showImage) {
+                        showImage = false;
+                    } else showImage = true;
                 }
             ) {
                 Row {
@@ -107,7 +129,10 @@ fun MainLayout() {
             }
             Button(
                 onClick = {
-
+                    when ( backColor ) {
+                        Color.Cyan -> backColor = Color.Yellow
+                        Color.Yellow -> backColor = Color.Cyan
+                    }
                 }
             ) {
                 Text(
